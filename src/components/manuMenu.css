@@ -90,20 +90,3 @@
     color:white !important;
     box-shadow: none !important;
 }
-.menu-btn, .not-checked {
-    border: 2px solid black!important; 
-    background-color: white!important; 
-    width:24px;
-    height: 24px; 
-    transition: all 0.3s ease-out;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-}
-.menu-btn, .checked{
-    border: 2px solid black!important; 
-    background-color: gray!important; 
-    width:24px;
-    height: 24px; 
-}

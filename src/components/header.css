@@ -34,3 +34,68 @@ a > .shop:hover {
     box-shadow: 3px 3px 8px 1px rgba(0,0,0,0.16);
     border:none
 }
+.nav-item > .anticon-search {
+    color: #707070;
+    font-size: 30px;
+    transition: all 0.5s;
+}
+.nav-item > .anticon-search:hover {
+    color: #707070;
+    font-size: 30px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+ .search-bar {
+    position: relative;
+    right:-500%;
+    bottom: -500%;
+    width: 0;
+    height:0;
+    padding: 0;
+    transition: all 0.5s;
+}
+.search-bar-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 24px;
+    width: 24px;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
+.search-bar-close-btn::before, 
+.search-bar-close-btn::after {
+    display: block;
+    border:solid gray;
+    left: 3px;
+    top: 2px;
+    width: 1px;
+    height: 20px;
+}
+.search-bar-close-btn::before {
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.search-bar-close-btn::after {
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.input-group-append > .anticon-close {
+    font-size: 20px;
+    transition: all 0.3s;
+}
+.input-group-append > .anticon-close:focus, 
+.search-bar > input {
+    box-shadow: none!important;
+    outline:0
+}
+.input-group-append > .anticon-close:hover {
+    opacity: 0.7;
+    font-size: 25px;
+    transition: all 0.3s;
+}

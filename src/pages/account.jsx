@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
-import API from '../utils/API'
+import axios from 'axios'
 import { Switch, Redirect } from 'react-router-dom';
 import './account.css'
 
@@ -38,15 +38,16 @@ export default class AccountPage extends Component {
         this.getUserFromDB()
     }
     async getUserFromDB() {
-        await API.get(`/home`, {withCredentials:true})
+        await axios.get(`https://lura-auth0.herokuapp.com/user`, {withCredentials:true})
         .then(res=>{
-            if(res.data===[]){this.setState({data: 'no-user'})}
+            if(res.data==={}){this.setState({data: 'no-user'})}
             this.setState({
-                firstName: res.data.firstName, 
-                lastName: res.data.lastName,
+                firstName: res.data.given_name, 
+                lastName: res.data.family_name,
                 email: res.data.username, 
-                password: res.data.password,
-                saved: res.data.savedManufacturers
+                brands: res.data.apparel_brand,
+                employees: res.data.number_of_employees,
+                pieces: res.data.pieces_produced
             })
         })
         .catch(err=>console.log(err))
@@ -56,10 +57,12 @@ export default class AccountPage extends Component {
         this.handleLogout()
     }
     async handleLogout () {
-        await API.post('/authenticate/logout', {}, config)
+        await axios.get('https://lura-auth0.herokuapp.com/logout')
         .then(res=>{
-            alert('Logout Successfully')
-            this.setRedirect()})
+            if(res.status===200){
+                alert('Logout Successfully')
+                this.setRedirect()
+            }})
         .catch(err=>console.log(err))
     }
     setRedirect = () => {

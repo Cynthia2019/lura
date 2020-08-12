@@ -8,3 +8,8 @@
         width:80%
     }
 }
+.signup-input::after {
+    content: '*';
+    color: #365247;
+    font-weight: bold;
+}

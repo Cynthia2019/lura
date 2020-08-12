@@ -70,7 +70,7 @@ export default class ShopPage extends Component {
             <div>
                 {this.renderRedirect()}
                 <CustomHeader/>
-                <div className='shop-main-content' style={{position:'relative',top:'120px'}}>
+                <div className='shop-main-content'>
                     <Row>
                         <Col className='side-filter' xs={this.state.collapse?1:9} md={3} style={this.state.collapse?{left:'-100%',transition:'0.5s'}:{}}>
                             <ShopSideMenu selected={this.state.selected} handleItemClick={this.handleItemClick}/>

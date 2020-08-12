@@ -1,3 +1,5 @@
+
+
 .side-filter {
     box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.15);
     left:0;
@@ -16,5 +18,15 @@
 @media screen and (min-width: 801px) {
     .shop-control-collapse-col {
         display: none;
+    }
+    .shop-main-content {
+        position: relative;
+        top:120px
+    }
+}
+@media screen and (max-width: 800px) {
+    .shop-main-content {
+        position: relative;
+        top:50px
     }
 }

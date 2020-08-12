@@ -25,7 +25,7 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "start": "set HTTPS=true&&PORT=443&&react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "deploy": "aws s3 cp --recursive ./build s3://lura.textiles.website",

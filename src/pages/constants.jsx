@@ -121,3 +121,12 @@ export const shopSectors = [
         tags:['print']
     }
 ]
+//quiz page constants
+export const designs = ['Swimwear','Denim jackets, Pants, Tops','Summer dresses, Tops, Skirts','Trousers, Slacks, Bottoms','Leather/Suede',
+'Knitwear','Shirts & Blouses','Activewear','Blazers & Coats','Hoodies','Smart casual & Formal dresswear','Other']
+export const bodies = ['Body fit: stretches to hug body','Loose, comfy, easy fit','Fabric holds its fit but is comfy on body',
+'Oversized, baggy','Structured, sharp','Drapes over body']
+export const fits = ['Lightweight, barely there feel (thin chiffons, loose airy summer dresses)','Medium, normal weight (basic cotton shirts, trousers)',
+'Heavy weight (thick hoodies, thick jeans, coats)','Flexible on weight']
+export const detailings = ['Lace','Metallic, shiny','Glitter, sequins','Patterns','Customizable patterns','Mesh','Embroidered','Velvet','Silk, satin','None of the above']
+export const sheernesses = ['See through, sheer', 'Partially sheer','Opaque','No preference']

@@ -20,7 +20,9 @@ export default class SideMenu extends React.Component {
         openPri: false,
         openWeight:false
       };
-
+    handleItemClick = () => {
+        console.log('manu clicked')
+    }
     render(){
     return(
         <div>
@@ -37,13 +39,7 @@ export default class SideMenu extends React.Component {
                     {list.slice(1).map((option)=>{
                         count ++;
                         return(
-                        <div key={count} style={{paddingLeft:0, display:'flex'}}>
-                                    <label className="checkbox-label">
-                                        <input type="checkbox"/>
-                                        <span className="checkbox-custom"></span>
-                                    </label>
-                                    <p>{option}</p>
-                        </div>
+                            <Checkbox option={option} handleItemClick={this.handleItemClick}/>
                         )
                     })}
                 </div>
@@ -59,13 +55,7 @@ export default class SideMenu extends React.Component {
         {types.map((option)=>{
             count++;
             return(
-            <div key={count} style={{paddingLeft:0,display:'flex'}}>
-                        <label className="checkbox-label">
-                            <input type="checkbox"/>
-                            <span className="checkbox-custom "></span>
-                        </label>
-                        <p>{option}</p>
-            </div>
+                <Checkbox option={option} handleItemClick={this.handleItemClick}/>
             )
         })}
         </Dropdown.Menu>
@@ -78,13 +68,7 @@ export default class SideMenu extends React.Component {
         <Dropdown.Menu>
         {minimums.map((option)=>{count++;
             return(
-            <div key={count} style={{paddingLeft:0, display:'flex'}}>
-                        <label className="checkbox-label">
-                            <input type="checkbox"/>
-                            <span className="checkbox-custom "></span>
-                        </label>
-                        <p>{option}</p>
-            </div>
+                <Checkbox option={option} handleItemClick={this.handleItemClick}/>
             )
         })}
         </Dropdown.Menu>
@@ -97,13 +81,7 @@ export default class SideMenu extends React.Component {
         <Dropdown.Menu>
         {prices.map((option)=>{count++;
             return(
-            <div key={count} style={{paddingLeft:0, display:'flex'}}>
-                        <label className="checkbox-label">
-                            <input type="checkbox"/>
-                            <span className="checkbox-custom "></span>
-                        </label>
-                        <p>{option}</p>
-            </div>
+                <Checkbox option={option} handleItemClick={this.handleItemClick}/>
             )
         })}
         </Dropdown.Menu>
@@ -115,13 +93,7 @@ export default class SideMenu extends React.Component {
         </div>
         <Dropdown.Menu>
         {weights.map((option,i)=>{return(
-            <div key={i} style={{paddingLeft:0, display:'flex'}}>
-                        <label className="checkbox-label">
-                            <input type="checkbox"/>
-                            <span className="checkbox-custom "></span>
-                        </label>
-                        <p>{option}</p>
-            </div>
+            <Checkbox option={option} handleItemClick={this.handleItemClick}/>
             )
         })}
         </Dropdown.Menu>
@@ -129,3 +101,23 @@ export default class SideMenu extends React.Component {
 </div>
     )
 }}
+
+function Checkbox(props){
+    function handleChange(e){
+        props.handleItemClick(e)
+    }
+    const color_style = {
+        backgroundColor:`${props.option.toLowerCase()}`,
+        border:`1px solid ${props.option==='White'?'black':props.option.toLowerCase()}`,
+    }
+    return(
+        <div style={{paddingLeft:0, display:'flex'}}>
+            <label className="checkbox-label">
+                <input type='checkbox' onChange={handleChange} id={props.option}/>
+                <span className="checkbox-custom" 
+                style={{'--color-var':'white'}}></span>
+            </label>
+            <p style={{fontSize:'15px'}}>{props.option}</p>
+        </div>
+    )
+}
