@@ -111,7 +111,9 @@ export default class AccountPage extends Component {
                                             </Modal.Header>
                                             <Modal.Body>{this.state.saved && this.state.saved.length !== 0?this.state.saved.map(manu => {return(<ul>{manu.name}</ul>)}):"Oops, you have not saved any manufacturer yet."}</Modal.Body>
                                         </Modal>
-                                    <Button style={{border:0, color:'grey', backgroundColor:'transparent', textDecoration:'underline',margin:'10px'}}>My Fabric Matchings</Button>
+                                    <Link to="/my-fabrics">
+                                        <Button style={{border:0, color:'grey', backgroundColor:'transparent', textDecoration:'underline',margin:'10px'}}>My Fabric Matchings</Button>
+                                    </Link>
                                 </div>
                             </Col>
                             <Col md={2} xs={5} style={{textAlign:'left',display:'flex',flexDirection:'column', marginTop:'10vh'}} className='account-setting-list'>
