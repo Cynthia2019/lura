@@ -46,6 +46,7 @@ function App() {
         <Route path='/admin/edit/:ManuId' component={EditManuPage}/>
         <Route path='/admin' component={AdminPage}/>
         <Route path='/fabric-finder' component={QuizPage}/>
+        <Route path='/my-fabrics' component={FabricsPage}/>
         <Route path='/email-verification' component={EmailPage}/>
       </Switch>
     </div>
