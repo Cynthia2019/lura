@@ -1,0 +1,27 @@
+.matchWrap {
+  margin-top: 15vh;
+}
+
+.matchtitle {
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+.matchtext {
+  text-align: left;
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+.matches {
+  text-align: left;
+  font-size: 16px;
+}
+
+#matchesList li:before {
+  content: '\003E';
+}
+
+#matchesList li:active, #matchesList li:hover {
+  font-weight: bolder;
+}
