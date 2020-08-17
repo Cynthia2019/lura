@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
-import axios from 'axios'
+import API from '../utils/API'
 import { Switch, Redirect } from 'react-router-dom';
 import './account.css'
 
@@ -24,6 +24,7 @@ export default class AccountPage extends Component {
         super(props)
         this.state = {
             show: false,
+            id: null,
             firstName: null, 
             lastName: null, 
             email: null, 
@@ -36,12 +37,14 @@ export default class AccountPage extends Component {
     }
     componentDidMount = () => {
         this.getUserFromDB()
+        this.getSavedFromDB()
     }
     async getUserFromDB() {
-        await axios.get(`https://lura-auth0.herokuapp.com/user`, {withCredentials:true})
+        await API.get(`/user`, {withCredentials:true})
         .then(res=>{
             if(res.data==={}){this.setState({data: 'no-user'})}
             this.setState({
+                id: res.data.id,
                 firstName: res.data.given_name, 
                 lastName: res.data.family_name,
                 email: res.data.username, 
@@ -52,12 +55,20 @@ export default class AccountPage extends Component {
         })
         .catch(err=>console.log(err))
     }
+    async getSavedFromDB() {
+        await API.get('/save', {withCredentials:true})
+        .then(res=>{
+            this.setState({
+                saved: res.data.saved
+            })
+        })
+    }
     handleLogoutClick = (e) => {
         e.preventDefault()
         this.handleLogout()
     }
     async handleLogout () {
-        await axios.get('https://lura-auth0.herokuapp.com/logout')
+        await API.get('https://lura-services.herokuapp.com/logout')
         .then(res=>{
             if(res.status===200){
                 alert('Logout Successfully')
@@ -126,15 +137,15 @@ export default class AccountPage extends Component {
                                 <div>{this.state.lastName}</div>
                                 <div>
                                     <Form.Control placeholder={this.state.email} style={{width:'60%',backgroundColor:'#EBE0D8',borderColor:'#EBE1D9'}}></Form.Control>
-                                    <EditModal type='email'/>
+                                    <EditModal type='email' info={this.state}/>
                                 </div>
                                 <div>
                                     <Form.Control placeholder={this.state.password} style={{width:'60%',backgroundColor:'#EBE0D8',borderColor:'#EBE1D9'}}></Form.Control>
-                                    <EditModal type='password'/>
+                                    <EditModal type='password' info={this.state}/>
                                 </div>
                                 <div>
                                     <Form.Control placeholder={this.state.phone} style={{width:'60%',backgroundColor:'#EBE0D8',borderColor:'#EBE1D9'}}></Form.Control>
-                                    <EditModal type='phone'/>
+                                    <EditModal type='phone' info={this.state}/>
                                 </div>
                             </Col>
                         </Row>

@@ -26,7 +26,7 @@ export default class EmailPage extends React.Component {
         if(this.state.redirect){
             return(
                 <Switch>
-                    <Redirect to='https://lura-auth0.herokuapp.com/login'/>
+                    <Redirect to='https://lura-services.herokuapp.com/login'/>
                 </Switch>
             )
         }

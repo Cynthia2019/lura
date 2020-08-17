@@ -13,6 +13,17 @@ export default class EditModal extends React.Component {
         this.state = {
             show: false
         }
+        this.old = React.createRef()
+        this.new = React.createRef()
+        this.check = React.createRef()
+    }
+    handleUpdate = () => {
+        API.patch('/register',{
+            id: this.props.info.id, 
+            username: this.props.info.email, 
+            firstName: this.props.info.firstName,
+            lastName: this.props.info.lastName, 
+        })
     }
     render(){
         const type = this.props.type
@@ -33,13 +44,13 @@ export default class EditModal extends React.Component {
                             <li>Confirm New {type}: </li>
                         </Col>
                         <Col xs={7} className='modal-setting'>
-                            <Form.Control type={type}></Form.Control>
-                            <Form.Control type={type}></Form.Control>
-                            <Form.Control type={type}></Form.Control>
+                            <Form.Control type={type} ref={this.old}></Form.Control>
+                            <Form.Control type={type} ref={this.new}></Form.Control>
+                            <Form.Control type={type} ref={this.check}></Form.Control>
                         </Col>
                     </Row>
                     <Row style={{justifyContent:'flex-end', padding:'0 20px'}}>
-                        <Button type='submit' style={{backgroundColor:'#4A645C',color:'white',borderRadius:'25px'}}>SUBMIT</Button>
+                        <Button type='submit' style={{backgroundColor:'#4A645C',color:'white',borderRadius:'25px'}} onClick={this.handleUpdate}>SUBMIT</Button>
                     </Row>
                 </Modal.Body>
             </Modal>

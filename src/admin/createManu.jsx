@@ -6,7 +6,7 @@ import API from '../utils/API'
 const config = {
     headers: {
         "Access-Control-Allow-Origin": "*",
-        'enctype': 'multipart/form-data'
+        "Content-Type":'application/json'
     },
     withCredentials: true
 }

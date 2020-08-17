@@ -32,20 +32,20 @@ export default class AdminPage extends Component {
             flexDirection:'column', alignItems:'center'}}>
                 <Button href='/admin/create-manufacturer' variant='info'>Create New Manufacturer</Button>
                 {this.state.manufacturers.length === 0?<></>:
-                this.state.manufacturers.map(manu => {
+                this.state.manufacturers.map((manu, i) => {
                     return(
-                        <Card style={{width:'70%'}}>
+                        <Card style={{width:'70%'}} key={i}>
                             <Card.Header style={{display:'flex', alignItems:'flex-start',justifyContent:'space-between'}}>
                                 <Card.Title>{manu.name}</Card.Title>
                                 <Button variant="outline-danger" onClick={()=>this.handleClick(manu._id)} style={{margin:'0 20px'}}>Delete</Button>
                             </Card.Header>
                             <Card.Body style={{display:'flex',flexDirection:'column', alignItems:'flex-start'}}>
                                 <Card.Text style={{display:'flex',flexDirection:'column',alignItems:'flex-start'}}>
-                                    <ul>Published: {manu.published?'Yes':'No'}</ul>
-                                    <ul>Fabric Types: {manu.overview.fabricTypes}</ul>
-                                    <ul>Minimum: {manu.overview.minimum}</ul>
-                                    <ul>Pricing: {manu.overview.pricing}</ul>
-                                    <ul>Lead Time: {manu.overview.leadTime}</ul>
+                                    <li style={{listStyle:'none'}}>Published: {manu.published?'Yes':'No'}</li>
+                                    <li style={{listStyle:'none'}}>Fabric Types: {manu.overview.fabricTypes}</li>
+                                    <li style={{listStyle:'none'}}>Minimum: {manu.overview.minimum}</li>
+                                    <li style={{listStyle:'none'}}>Pricing: {manu.overview.pricing}</li>
+                                    <li style={{listStyle:'none'}}>Lead Time: {manu.overview.leadTime}</li>
                                 </Card.Text>
                                 <Button variant='outline-info' href={`/admin/edit/${manu._id}`} style={{width:'fit-content'}}>Edit</Button>
                             </Card.Body>

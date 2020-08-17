@@ -6,17 +6,7 @@ import Button from 'react-bootstrap/Button'
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
 import './header.css'
 import { Navbar, Nav }from 'react-bootstrap'
-import axios from 'axios'
-
-// const config = {
-//     headers: {
-//         "Access-Control-Allow-Origin": 'https://localhost:3000',
-//         'Content-Type': 'application/json',
-//         'Access-Control-Allow-Credentials': true,
-//     },
-//     withCredentials: true,
-// }
-
+import API from '../utils/API'
 
 export default class CustomHeader extends Component {
     constructor(){
@@ -30,8 +20,9 @@ export default class CustomHeader extends Component {
         this.setState({search:true})
     }
     getUserFromDB = () => {
-        axios.get('https://lura-auth0.herokuapp.com/user', {withCredentials: true,})
+        API.get('/user', {withCredentials: true,})
         .then(res=>{
+            console.log(res.data)
             if(res.data.username) {
                 this.setState({user:true})
             } 
@@ -54,8 +45,8 @@ export default class CustomHeader extends Component {
                         {this.state.user?<Nav.Link href='/account'>My Account</Nav.Link>:<></>}
                         {/*<Nav.Link href='/fabric-finder'>Fabric Consultation</Nav.Link>*/}
                         <Nav.Link href='/blog'>Blog</Nav.Link>
-                        <Nav.Link href='https://lura-auth0.herokuapp.com/login'>Log In</Nav.Link>
-                        <Nav.Link href='https://lura-auth0.herokuapp.com/register'>Sign Up</Nav.Link>
+                        <Nav.Link href='https://lura-services.herokuapp.com/login'>Log In</Nav.Link>
+                        <Nav.Link href='https://lura-services.herokuapp.com/register'>Sign Up</Nav.Link>
                         <Nav.Item onClick={this.handleSearch}>
                             <SearchOutlined style={this.state.search?{fontSize:0,transition:'0.5s',position:'absolute'}:{}}/>
                         </Nav.Item>

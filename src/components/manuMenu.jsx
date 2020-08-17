@@ -10,7 +10,6 @@ const types = Constants.types
 const minimums = Constants.minimums
 const prices = Constants.prices
 const weights = Constants.weights
-var count = 0
 
 export default class SideMenu extends React.Component {
     state = {
@@ -37,7 +36,6 @@ export default class SideMenu extends React.Component {
                 <div>
                     <Dropdown.Header>{list[0]}</Dropdown.Header>
                     {list.slice(1).map((option)=>{
-                        count ++;
                         return(
                             <Checkbox option={option} handleItemClick={this.handleItemClick}/>
                         )
@@ -53,7 +51,6 @@ export default class SideMenu extends React.Component {
         </div>
         <Dropdown.Menu>
         {types.map((option)=>{
-            count++;
             return(
                 <Checkbox option={option} handleItemClick={this.handleItemClick}/>
             )
@@ -66,7 +63,7 @@ export default class SideMenu extends React.Component {
             {this.state.openMin?<DownOutlined/>:<RightOutlined/>}
         </div>
         <Dropdown.Menu>
-        {minimums.map((option)=>{count++;
+        {minimums.map((option)=>{
             return(
                 <Checkbox option={option} handleItemClick={this.handleItemClick}/>
             )
@@ -79,7 +76,7 @@ export default class SideMenu extends React.Component {
             {this.state.openPri?<DownOutlined/>:<RightOutlined/>}
         </div>
         <Dropdown.Menu>
-        {prices.map((option)=>{count++;
+        {prices.map((option)=>{
             return(
                 <Checkbox option={option} handleItemClick={this.handleItemClick}/>
             )

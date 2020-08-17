@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { Divider } from 'antd'
-import axios from 'axios'
+import API from '../utils/API'
 import { Switch, Redirect } from 'react-router-dom';
 import './signupPage.css'
 import {PageView, initGA} from '../components/Tracking';
@@ -35,7 +35,7 @@ export default class SignUpPage extends React.Component {
         var url = window.location.search
         console.log(url.substring(1))
         var parts = url.substring(1).split('&')
-        var email = parts[0].split('=')[1].replace('%40','@')
+        var email = parts[0].split('=')[1].replace('%40','@').replace('%7C','|')
         this.setState({email:email, id:parts[1].split('=')[1]})
     }
     componentWillMount = () =>{
@@ -55,7 +55,7 @@ export default class SignUpPage extends React.Component {
     }
     userRegister = () => {
         console.log(this.state.id)
-        axios.post('https://lura-auth0.herokuapp.com/register',{
+        API.post('/register',{
             id: this.state.id, 
             username: this.state.email,
             firstName: this.firstname.current.value,

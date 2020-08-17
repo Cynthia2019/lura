@@ -1,0 +1,14 @@
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+
+[dn]
+C=CN
+ST=Shanghai
+L=Shanghai
+O=Lura
+OU=Web Development
+emailAddress=yujiaxie2023@u.northwestern.edu
+CN = localhost
