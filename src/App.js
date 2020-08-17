@@ -52,6 +52,7 @@ function App() {
         {access?<Route exact path='/account' component={AccountPage}/>:<Route component={ErrorPage}/>}
         <Route path='/signup' component={SignupPage}/>
         <Route path='/fabric-finder' component={QuizPage}/>
+        <Route path='/my-fabrics' component={FabricsPage}/>
         <Route path='/email-verification' component={EmailPage}/>
         <Route path='*' component={ErrorPage}/>
         {access==='admin'?<>
