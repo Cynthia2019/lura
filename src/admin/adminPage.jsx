@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import API from '../utils/API'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import { config } from '../utils/config'
 
 export default class AdminPage extends Component {
     constructor(){
@@ -11,7 +12,7 @@ export default class AdminPage extends Component {
         }
     }
     async getManufromDB (){
-        await API.get('/manufacturers/all',{withCredentials:true})
+        await API.get('/manufacturers/all?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin',config)
         .then(res=>
             {console.log(res.data)
                 this.setState({manufacturers: res.data.manufacturers})})
@@ -22,8 +23,11 @@ export default class AdminPage extends Component {
     }
     async handleClick (id) {
         console.log(id)
-        await API.delete(`/manufacturers/admin/delete/${id}`,{withCredentials:true})
-        .then(res=>alert("Manufacturer deleted"))
+        await API.delete(`/manufacturers/admin/delete/${id}?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`,config)
+        .then(res=>{if(res.status===200){
+            alert("Manufacturer deleted")
+            window.location.reload(false)
+        }})
         .catch(err=>console.log(err))
     }
     render(){
@@ -47,7 +51,7 @@ export default class AdminPage extends Component {
                                     <li style={{listStyle:'none'}}>Pricing: {manu.overview.pricing}</li>
                                     <li style={{listStyle:'none'}}>Lead Time: {manu.overview.leadTime}</li>
                                 </Card.Text>
-                                <Button variant='outline-info' href={`/admin/edit/${manu._id}`} style={{width:'fit-content'}}>Edit</Button>
+                                <Button variant='outline-info' href={`/admin/edit/${manu._id}`} style={{width:'fit-content'}} info={manu}>Edit</Button>
                             </Card.Body>
                         </Card>
                     )

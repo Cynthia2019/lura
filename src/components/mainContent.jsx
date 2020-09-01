@@ -8,7 +8,7 @@ import Image6 from '../img/leone-venter-mTkXSSScrzw-unsplash.jpg'
 import Image7 from '../img/skyla-design-qPE-5Nn7xwU-unsplash.jpg'
 import Image8 from '../img/ellieelien-gT4CnGJTido-unsplash.jpg'
 import { Row } from 'antd'
-import './mainContent.sass'
+import './mainContent.css'
 
 export default class MainContent extends Component {
     render(){

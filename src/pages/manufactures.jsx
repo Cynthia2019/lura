@@ -9,7 +9,7 @@ import API from '../utils/API'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import './manufactures.css'
-
+import { config } from '../utils/config'
 
 
 export default class Manufacture extends Component {
@@ -23,12 +23,16 @@ export default class Manufacture extends Component {
         }
     }
     async getManufacturerfromDB () {
-        await API.get('/manufacturers/all', {withCredentials:true})
-        .then(res => {this.setState({manufacturers:res.data.manufacturers})})
+        await fetch('https://lura-services.herokuapp.com/manufacturers/all?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin', config)
+        .then(res => {res.json().then(
+            data=>{console.log(data)
+            this.setState({manufacturers:data.manufacturers})}
+            )
+           })
         .catch(err=>console.log(err))
     }
     async getSavedfromDB () {
-        await API.get('/manufacturers/save', {withCredentials:true})
+        await API.get('/manufacturers/save?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin')
         .then(res=>{this.setState({saved:res.data.saved})})
         .catch(err=>console.log(err))
     }
@@ -81,3 +85,11 @@ const ImageText = {
     color:'white',
     fontWeight: 'bold'
 }
+/**
+ * 
+ *     async getManufacturerfromDB () {
+        await API.get('https://lura-services.herokuapp.com/manufacturers/all', config)
+        .then(res => {this.setState({manufacturers:res.data.manufacturers})})
+        .catch(err=>console.log(err))
+    }
+ */

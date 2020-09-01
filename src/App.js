@@ -2,7 +2,9 @@ import React from 'react';
 import './App.css';
 import MainPage from './pages/main';
 import MainPage2 from './pages/mainPage'
+import MyCart from './pages/myCart'
 //import ShopItemPage from './pages/shopItem';
+import FabricsPage from './pages/myFabrics'
 import ShopPage from './pages/shop';
 import BlogPage from './pages/blog';
 import ManuPage from './pages/manufactures';
@@ -48,18 +50,23 @@ function App() {
         <Route path='/blog' component={BlogPage} />
         <Route exact path='/blogContent/:blogId' component={PostPage}/>
         <Route path='/manufactures' component={ManuPage}/>
-        <Route exact path='/manufacture-database/:ManuId'component={ManuInfo}/>
-        {access?<Route exact path='/account' component={AccountPage}/>:<Route component={ErrorPage}/>}
-        <Route path='/signup' component={SignupPage}/>
+        <Route exact path='/manufacture-database/:ManuId'component={ManuInfo}/> 
+        <Route path='/signup?username=:USERNAME&id=:ID&state=:STATE' component={SignupPage}/>
         <Route path='/fabric-finder' component={QuizPage}/>
-        <Route path='/my-fabrics' component={FabricsPage}/>
+        <Route path='/account/my-fabrics' component={FabricsPage}/>
         <Route path='/email-verification' component={EmailPage}/>
+        <Route exact path='/account' component={AccountPage}/>
+        <Route path='/admin/create-manufacturer' component={CreateManuPage}/>
+        <Route path='/admin/edit/:ManuId' component={EditManuPage}/>
+        <Route path='/admin' component={AdminPage}/>
+        <Route component={MyCart} path='/my-cart'/>
         <Route path='*' component={ErrorPage}/>
+        {/* {access?<Route exact path='/account' component={AccountPage}/>:<Route component={ErrorPage}/>}
         {access==='admin'?<>
         <Route path='/admin/create-manufacturer' component={CreateManuPage}/>
         <Route path='/admin/edit/:ManuId' component={EditManuPage}/>
         <Route path='/admin' component={AdminPage}/></>:
-        <Route path='*' component={ErrorPage}/>}
+        <Route path='*' component={ErrorPage}/>} */}
       </Switch>
     </div>
     </Router>

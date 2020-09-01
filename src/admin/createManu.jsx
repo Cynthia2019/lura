@@ -1,32 +1,23 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { config } from '../utils/config'
 import API from '../utils/API'
-
-const config = {
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type":'application/json'
-    },
-    withCredentials: true
-}
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 export default class CreateManuPage extends React.Component {
     constructor(props){
         super(props)
         this.name = React.createRef()
         this.bio = React.createRef()
-        this.avatar = React.createRef()
     }
     async putManuIntoDB () {
-        const fd = new FormData();
-        fd.append('image', this.avatar.current.value)
-        await API.post('/manufacturers/admin/create', {
-            name:this.name.current.value, 
-            avatar: this.avatar.current.value, 
+        await API.post('/manufacturers/admin/create?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin', {
+            name: this.name.current.value,
             bio: this.bio.current.value
         }, config)
-        .then(res=>alert('created successfully'))
+        .then(res=>{if(res.status===201){alert('Created Successfully')}})
         .catch(err=>console.log(err))
     }
     handleClick = (e) => {
@@ -48,12 +39,8 @@ export default class CreateManuPage extends React.Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Bio</Form.Label>
-                        <Form.Control type='text' ref={this.bio}/>
+                        <Form.Control as='textarea' ref={this.bio}/>
                     </Form.Group>
-                    <Form.File>
-                        <Form.File.Label>Avatar</Form.File.Label>
-                        <Form.File.Input ref={this.avatar}/>
-                    </Form.File>
                 </Form>
                 <Button onClick={this.handleClick} variant='outline-info'>Submit</Button>
                 <Button href='/admin' variant='success' style={{margin:'20px 0'}}>Back</Button>

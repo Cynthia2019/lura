@@ -4,8 +4,12 @@ import img_1 from '../img/NAMIHOFFMAN_112419FABRIC-19.png'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import {PageView, initGA} from '../components/Tracking';
+import API from "../utils/API"
+import { loadStripe } from '@stripe/stripe-js';
 import Button from 'react-bootstrap/Button'
 import './myCart.css'
+const Pub_Key = 'pk_test_51HBlWPFtnv80F1v5Ld01BjiDKHXK1bWj34qcGxN4TeKR9fXzGJCmPimrLRnzMrV8EZPLafu3ozf7hwNvPnm7WJVU00KpnywkUy'
+const stripePromise = loadStripe(Pub_Key);
 
 export default class MyCart extends Component {
     constructor(props){
@@ -42,7 +46,22 @@ export default class MyCart extends Component {
         } else {}
       });
     }
-    
+    async handleClick () {
+        // Call your backend to create the Checkout Session—see previous step
+        await API.get('/checkout/id').then(async function(response) {
+            var sessionId = response.data.sessionID
+            console.log(response.data.sessionID)
+            const stripe = await stripePromise;
+            const { error } = await stripe.redirectToCheckout({
+              sessionId,
+            });
+            if(error){alert(error.message)}
+          })
+        // When the customer clicks on the button, redirect them to Checkout.
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer
+        // using `error.message`.
+      };
 
 
     render(){
@@ -69,7 +88,7 @@ export default class MyCart extends Component {
                                 <span>Color: Brown<br/>Size: Swatch<br/>Quantity:</span>
                                 <div>
                                 <button onClick = {this.IncrementQuan}>+</button>
-                                <input type="text" className="number" value={this.state.quantity}></input>
+                                <input type="text" className="number" value={this.state.quantity}/>
                                 <button onClick = {this.DecreaseQuan}>-</button>
                                 </div>
                             </div>
@@ -88,9 +107,7 @@ export default class MyCart extends Component {
                             <hr />
                             <p style={{padding:'0 20px', fontSize:'18px'}}>Subtotal: $10<br/> Total: $10</p>
                             <hr />
-                            <Button className='btn-darkgreen'type="submit" 
-                            href='/blog'>GO TO CHECKOUT
-                            </Button>
+                            <Button className='btn-darkgreen'type="submit" onClick={this.handleClick}>GO TO CHECKOUT</Button>
                         
                         </div>
                     </Col>

@@ -7,6 +7,7 @@ import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
 import './header.css'
 import { Navbar, Nav }from 'react-bootstrap'
 import API from '../utils/API'
+import { config } from '../utils/config'
 
 export default class CustomHeader extends Component {
     constructor(){
@@ -20,9 +21,9 @@ export default class CustomHeader extends Component {
         this.setState({search:true})
     }
     getUserFromDB = () => {
-        API.get('/user', {withCredentials: true,})
+        API.get('/user', config)
         .then(res=>{
-            console.log(res.data)
+            console.log(res.data, 'user')
             if(res.data.username) {
                 this.setState({user:true})
             } 
