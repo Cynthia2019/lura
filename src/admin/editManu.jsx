@@ -44,7 +44,7 @@ export default class EditManuPage extends React.Component {
 
     }
     async getManuInfo () {
-        await API.get(`/manufacturers/info/${this.props.match.params.ManuId}?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`,{withCredentials:true})
+        await API.get(`/manufacturers/info/${this.props.match.params.ManuId}`,{withCredentials:true})
         .then(res=>{
             console.log(res.data.info)
             this.setState(
@@ -64,24 +64,24 @@ export default class EditManuPage extends React.Component {
     }
     publishManu = () => {
         console.log(this.props)
-        API.patch(`/manufacturers/admin/publish/${this.props.match.params.ManuId}${this.state.published?"unpublish=true":""}?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`,{},config)
+        API.patch(`/manufacturers/admin/publish/${this.props.match.params.ManuId}${this.state.published?"unpublish=true":""}`,{},config)
         .then(res=>alert('Manufacturer published'))
         .catch(err=>this.setState({error: err}))
     }
     async updateName () {
-        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/name?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`, {
+        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/name`, {
             name:this.name.current.value?this.name.current.value:this.state.name, 
         }, config).then(res=>{if(res.status===200){console.log(res.data)}})
         .catch(err=>this.setState({error: err}))
     }
     async updateBio () {
-        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/bio?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`, {
+        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/bio`, {
             bio:this.bio.current.value?this.bio.current.value:this.state.bio, 
         }, config).then(res=>{if(res.status===200){console.log(res.data)}})
         .catch(err=>this.setState({error: err}))
     }
     async updateInfo () {
-        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/info?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`, {
+        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/info`, {
                 type: this.type.current.value?this.type.current.value:this.state.info.type,
                 location: this.location.current.value?this.location.current.value:this.state.info.location,
                 employees: this.size.current.value?this.size.current.value:this.state.info.employees,
@@ -89,7 +89,7 @@ export default class EditManuPage extends React.Component {
         .catch(err=>this.setState({error: err}))
     }
     async updateOverview () {
-        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/overview?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`, {
+        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/overview`, {
                 fabricTypes: this.fabricType.current.value?this.fabricType.current.value.split(','):this.state.overview.fabricTypes,
                 minimumOrderQuantity: this.moq.current.value?this.moq.current.value:this.state.overview.moq,
                 pricing: this.pricing.current.value?this.pricing.current.value:this.state.overview.pricing,
@@ -98,7 +98,7 @@ export default class EditManuPage extends React.Component {
         .catch(err=>this.setState({error: err}))
     }
     async updateContact () {
-        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/contact?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`,
+        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/contact`,
         {
             email: this.email.current.value?this.email.current.value:this.state.contact.email,
             tel: this.tel.current.value?this.tel.current.value:this.state.contact.tel,
@@ -109,7 +109,7 @@ export default class EditManuPage extends React.Component {
     }
     async updatePractices () {
         const regex = /\s*\d\)\s*/
-        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/practices?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`,
+        await API.patch(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/practices`,
         {
             practices: this.susInfo.current.value?this.susInfo.current.value.split(regex).slice(1):this.state.sustainability
         }).then(res=>{if(res.status===200){

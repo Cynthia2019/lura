@@ -20,14 +20,15 @@ export default class CustomHeader extends Component {
     handleSearch = () => {
         this.setState({search:true})
     }
-    getUserFromDB = () => {
-        API.get('/user', config)
+    async getUserFromDB () {
+        await API.get('/user', config)
         .then(res=>{
             console.log(res.data, 'user')
-            if(res.data.username) {
-                this.setState({user:true})
-            } 
-        }).catch(err=>console.log(err))
+                if(res.data.username) {
+                    this.setState({user:true})
+                } 
+            }
+        ).catch(err=>console.log(err))
     }
     componentDidMount = () => {
         this.getUserFromDB()
@@ -42,9 +43,10 @@ export default class CustomHeader extends Component {
                 <Navbar.Collapse id="basic-navbar-nav" style={{justifyContent:'flex-end'}}>
                     <Nav className='header-navs'>
                         {/*<Nav.Link href='/shop'>Shop</Nav.Link>
-                        <Nav.Link href="/manufactures">Manufactures</Nav.Link>*/}
+                        */}
                         {this.state.user?<Nav.Link href='/account'>My Account</Nav.Link>:<></>}
                         {/*<Nav.Link href='/fabric-finder'>Fabric Consultation</Nav.Link>*/}
+                        <Nav.Link href="/manufactures">Manufactures</Nav.Link>
                         <Nav.Link href='/blog'>Blog</Nav.Link>
                         <Nav.Link href='https://lura-services.herokuapp.com/login'>Log In</Nav.Link>
                         <Nav.Link href='https://lura-services.herokuapp.com/register'>Sign Up</Nav.Link>

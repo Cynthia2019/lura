@@ -5,15 +5,9 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import API from '../utils/API'
+import {config} from '../utils/config'
 import './manuCard.css'
 
-const config = {
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        'Content-Type': 'application/json'
-    },
-    withCredentials: true
-}
 export default class Card extends React.Component {
     constructor(props){
         super(props)
@@ -46,7 +40,7 @@ export default class Card extends React.Component {
         this.setState({show:true})
     }
     async handleSave () {
-        await API.post(`/manufacturers/save/${this.props.info._id}`,{},{withCredentials:true})
+        await API.post(`/manufacturers/save/${this.props.info._id}`,{},config)
         .then(res=>{console.log(res)})
         .catch(err=>console.log(err))
     }
@@ -64,33 +58,31 @@ export default class Card extends React.Component {
                 <div className="card">
                     <div className="card-body">
                         <div className="card-title">
-                            <h3>{info.name}</h3>
-                            <Button onClick={this.handleButtonClick} 
-                            style={{backgroundColor:'none', border:'none'}}>
-                                {this.state.saved?<BookFilled/>:<BookOutlined/>}
+                            <h1 style={{fontWeight:200}}>{info.name}</h1>
+                            <Button onClick={this.handleButtonClick} className='save-button'>
+                                {this.state.saved?<BookFilled style={{fontSize:'35px',alignSelf:'baseline'}}/>:<BookOutlined style={{fontSize:'30px',alignSelf:'baseline'}}/>}
                             </Button>
                         </div>
                         <div className="card-text">
                         <Row>
-                            <Col md={9}>
-                            <ul><span style={{margin:'5px'}}><EnvironmentFilled/></span>{info.contact.location}</ul>
-                            <ul><span>Fabrics produced: </span>{info.overview.fabricTypes}</ul>
-                            <ul><span>Minimum: </span>{info.overview.minimum}</ul>
-                            <ul><span>Average Price: </span>{info.overview.pricing}</ul>
-                            <ul><span>Brands worked with: </span>{info.overview.brandsWorkedWith}</ul>
+                            <Col md={9} className='info-display'>
+                            <ul><span style={{margin:'5px'}}><EnvironmentFilled/></span>{info.info.location?info.info.location:'N/A'}</ul>
+                            <ul><span>Fabrics produced: </span>{info.overview.fabricTypes?info.overview.fabricTypes:'N/A'}</ul>
+                            <ul><span>Minimum: </span>{info.overview.minimum?info.overview.minimum:'N/A'}</ul>
+                            <ul><span>Average Pricing: </span>{info.overview.pricing?info.overview.pricing:'N/A'}</ul>
                             </Col>
                             <Col md={3} style={{display:'flex', justifyContent:'space-between', flexDirection:'column'}}>
-                                <Button variant="outline-info" href={`/manufacture-database/${info._id}`}>More Info</Button>
-                                <Button variant='outline-success' onClick={this.handleClick}>Contact</Button>
+                                <Button className='more-info-button' href={`/manufacture-database/${info._id}`} saved={this.state.saved}>More Info</Button>
+                                <Button className='contact-button' onClick={this.handleClick}>CONTACT</Button>
                                 <Modal show={this.state.show} onHide={this.handleClose} centered style={{border:0}}>
-                                    <Modal.Header closeButton style={{backgroundColor:'rgba(171, 211, 187,0.5)'}}>
+                                    <Modal.Header closeButton style={{backgroundColor:'rgba(248, 234, 234,1)'}}>
                                         <Modal.Title>CONTACT</Modal.Title>
                                     </Modal.Header>
-                                    <Modal.Body style={{backgroundColor:'rgba(171, 211, 187,0.5)', color:'rgba(0,0,0,0.75)'}}>
-                                        <div><span style={{fontWeight:'bold',fontSize:'20px'}}>Email</span> {info.contact.email}</div>
-                                        <div><span style={{fontWeight:'bold',fontSize:'20px'}}>Tel.</span>  {info.contact.tel}</div>
-                                        <div><span style={{fontWeight:'bold',fontSize:'20px'}}>Contact Name: </span>  {info.contact.contactName}</div>
-                                        <div><span style={{fontWeight:'bold',fontSize:'20px'}}>Brands worked with: </span>  {info.overview.brandsWorkedWith}</div>
+                                    <Modal.Body style={{backgroundColor:'rgba(171, 211, 187,0.5)', color:'rgba(248, 234, 234,1)'}}>
+                                        <div><span style={{fontWeight:'bold',fontSize:'20px'}}>Name: </span> {info.contact.contactName?info.contact.contactName:'N/A'}</div>
+                                        <div><span style={{fontWeight:'bold',fontSize:'20px'}}>Position: </span> {info.contact.contactName?info.contact.position:'N/A'}</div>
+                                        <div><span style={{fontWeight:'bold',fontSize:'20px'}}>Email</span> {info.contact.email?info.contact.email:'N/A'}</div>
+                                        <div><span style={{fontWeight:'bold',fontSize:'20px'}}>Tel.</span>  {info.contact.tel?info.contact.tel:'N/A'}</div>
                                     </Modal.Body>
                                 </Modal>
                             </Col>

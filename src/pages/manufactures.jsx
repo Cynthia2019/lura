@@ -9,36 +9,57 @@ import API from '../utils/API'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import './manufactures.css'
+import Spinner from 'react-bootstrap/Spinner'
 import { config } from '../utils/config'
 
+const temp = '?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=normal'
 
 export default class Manufacture extends Component {
     constructor(){
         super()
         this.state={
+            loading:true,
             manufacturers: [],
             saved: [],
             collapse: false,
-            width: window.innerWidth
+            width: window.innerWidth,
+            user:false
         }
     }
+    async getUserFromDB () {
+        await API.get(`/user${temp}`, config)
+        .then(res=>{
+                if(res.data.access) {
+                    this.setState({user:true})
+                    this.getSavedfromDB()
+                    this.getManufacturerfromDB()
+                } else {
+                    this.setState({
+                        loading:false, 
+                    })
+                }
+            }
+        ).catch(err=>console.log(err))
+    }
     async getManufacturerfromDB () {
-        await fetch('https://lura-services.herokuapp.com/manufacturers/all?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin', config)
-        .then(res => {res.json().then(
-            data=>{console.log(data)
-            this.setState({manufacturers:data.manufacturers})}
-            )
+        await API.get('/manufacturers/all', config)
+        .then(res => {
+            console.log(res.data)
+            this.setState({
+                loading:false,
+                manufacturers:res.data.manufacturers
+            })
            })
         .catch(err=>console.log(err))
     }
-    async getSavedfromDB () {
-        await API.get('/manufacturers/save?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin')
-        .then(res=>{this.setState({saved:res.data.saved})})
+    getSavedfromDB = () => {
+        API.get(`/manufacturers/save${temp}`,config)
+        .then(res=>{console.log('saved')
+            this.setState({saved:res.data.saved})})
         .catch(err=>console.log(err))
     }
     componentDidMount = () => {
-        this.getManufacturerfromDB()
-        this.getSavedfromDB()
+        this.getUserFromDB()
     }
     componentWillMount = () => {
         if(this.state.collapse){
@@ -54,7 +75,7 @@ export default class Manufacture extends Component {
                     <CustomHeader />
                 </div>
                 <div className='database-title'>
-                    <div className="image-text" style={ImageText}>MANUFACTURER DATABASE</div>
+                    <div className="image-text" style={ImageText}>Supplier Directory</div>
                 </div>
                 <Row style={{textAlign:'left',margin:'0',backgroundColor:'#FEF9F6',flexDirection:'row'}} className='database-content'>
                     <Col md={4} xs={this.state.collapse?1:9} className='side-menu' style={this.state.collapse?{left:'-100%',transition:'0.5s'}:{}}>
@@ -64,11 +85,13 @@ export default class Manufacture extends Component {
                         <Button onClick={()=>{this.setState({collapse:!this.state.collapse})}} className='control-collapse'>{this.state.collapse?<RightOutlined />:<LeftOutlined />}</Button>
                     </Col>
                     <Col xs={7} className='database-content-main' style={(this.state.collapse)?{transition:'0.5s'}:this.state.width>800?{}:{display:'none'}}>
-                        {this.state.manufacturers.length!== 0?this.state.manufacturers.map((manu, i)=>{
+                        {this.state.loading?<Spinner animation="border" variant="success" size='lg'/>:this.state.manufacturers.length!== 0?this.state.manufacturers.map((manu, i)=>{
                             return(
-                                <ManuCard info={manu} index={i} saved={this.state.saved}/>
+                                <ManuCard info={manu} saved={this.state.saved} key={i}/>
                             )
-                        }):<h3>There is no manufacturer in the database...</h3>}
+                        }):<div style={{justifyContent:'center',display:'flex',alignItems:'center'}}>
+                            <h3>Please login first to see the supplier information.</h3>
+                        </div>}
                     </Col>
                 </Row>
             </div>

@@ -12,18 +12,62 @@
 }
 .card-body {
     flex: 1 1 auto; 
-    min-height: 1px;
     padding: 1.25rem;
 }
 .card-title {
-    margin-bottom: .75rem;
+    margin: 5px 30px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+}
+.info-display > ul {
+    margin-bottom: 0.5rem;
+    font-size: 15px;
+}
+.info-display > ul > span {
+    font-size: 15px;
+    font-weight: 400;
+}
+.save-button {
+    background-color: transparent !important;
+    border:none !important;
+    color:black!important 
+}
+.save-button:hover {
+    background-color: transparent!important;
+    border:none !important;
+    color:black!important;
+    box-shadow: none !important;
+}
+.more-info-button {
+    background-color: transparent !important;
+    border: rgba(55,82,71,1) solid !important;
+    color: black !important;
+    box-shadow:none !important;
+}
+.more-info-button:hover {
+    background-color: rgba(55,82,71,1) !important;
+    border: transparent solid !important;
+    color: white !important;
+    box-shadow:none !important;
+}
+.contact-button {
+    background-color: rgba(55,82,71,1) !important;
+    border: transparent solid!important;
+    color: white !important;
+    box-shadow:none !important;
+}
+.contact-button:hover {
+    background-color: transparent !important;
+    border: rgba(55,82,71,1) solid !important;
+    color: black !important;
+    box-shadow:none !important;
 }
 @media screen and (min-width: 801px) {
     .card {
         min-width: 700px !important;
+    }
+    .card-text > .row {
+        width: 45vw;
     }
 }
 @media screen and (max-width: 800px) {

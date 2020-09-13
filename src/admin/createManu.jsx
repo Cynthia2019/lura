@@ -13,7 +13,7 @@ export default class CreateManuPage extends React.Component {
         this.bio = React.createRef()
     }
     async putManuIntoDB () {
-        await API.post('/manufacturers/admin/create?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin', {
+        await API.post('/manufacturers/admin/create', {
             name: this.name.current.value,
             bio: this.bio.current.value
         }, config)

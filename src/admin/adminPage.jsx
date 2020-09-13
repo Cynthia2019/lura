@@ -12,7 +12,7 @@ export default class AdminPage extends Component {
         }
     }
     async getManufromDB (){
-        await API.get('/manufacturers/all?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin',config)
+        await API.get('/manufacturers/all',config)
         .then(res=>
             {console.log(res.data)
                 this.setState({manufacturers: res.data.manufacturers})})
@@ -23,7 +23,7 @@ export default class AdminPage extends Component {
     }
     async handleClick (id) {
         console.log(id)
-        await API.delete(`/manufacturers/admin/delete/${id}?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`,config)
+        await API.delete(`/manufacturers/admin/delete/${id}`,config)
         .then(res=>{if(res.status===200){
             alert("Manufacturer deleted")
             window.location.reload(false)
