@@ -42,7 +42,7 @@ export default class Manufacture extends Component {
         ).catch(err=>console.log(err))
     }
     async getManufacturerfromDB () {
-        await API.get('/manufacturers/all', config)
+        await API.get(`/manufacturers/all${temp}`, config)
         .then(res => {
             console.log(res.data)
             this.setState({
@@ -53,7 +53,7 @@ export default class Manufacture extends Component {
         .catch(err=>console.log(err))
     }
     getSavedfromDB = () => {
-        API.get(`/manufacturers/save${temp}`,config)
+        API.get(`/manufacturers/save`,config)
         .then(res=>{console.log('saved')
             this.setState({saved:res.data.saved})})
         .catch(err=>console.log(err))

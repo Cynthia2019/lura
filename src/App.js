@@ -34,7 +34,7 @@ history.listen(location => {
 });
 var access = null
 function getUserAccess  () {
-  API.get('/user').then(res=>{
+  API.get(`/user`).then(res=>{
     if(res.data !== {}){access = res.data.access}
   })
 }
@@ -57,12 +57,10 @@ function App() {
         <Route path='/email-verification' component={EmailPage}/>
         <Route exact path='/account' component={AccountPage}/>
         <Route component={MyCart} path='/my-cart'/>
-        {access?<Route exact path='/account' component={AccountPage}/>:<Route component={ErrorPage}/>}
-        {access==='admin'?<>
         <Route path='/admin/create-manufacturer' component={CreateManuPage}/>
         <Route path='/admin/edit/:ManuId' component={EditManuPage}/>
-        <Route path='/admin' component={AdminPage}/></>:
-        <Route path='*' component={ErrorPage}/>}
+        <Route exact path='/admin' component={AdminPage}/>
+        <Route component={ErrorPage}/>
       </Switch>
     </div>
     </Router>

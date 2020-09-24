@@ -24,7 +24,7 @@ export default class CustomHeader extends Component {
         await API.get('/user', config)
         .then(res=>{
             console.log(res.data, 'user')
-                if(res.data.username) {
+                if(res.data.access) {
                     this.setState({user:true})
                 } 
             }
@@ -48,8 +48,8 @@ export default class CustomHeader extends Component {
                         {/*<Nav.Link href='/fabric-finder'>Fabric Consultation</Nav.Link>*/}
                         <Nav.Link href="/manufactures">Manufactures</Nav.Link>
                         <Nav.Link href='/blog'>Blog</Nav.Link>
-                        <Nav.Link href='https://lura-services.herokuapp.com/login'>Log In</Nav.Link>
-                        <Nav.Link href='https://lura-services.herokuapp.com/register'>Sign Up</Nav.Link>
+                        <Nav.Link href='https://server.lura-services.com/login'>Log In</Nav.Link>
+                        <Nav.Link href='https://server.lura-services.com/register'>Sign Up</Nav.Link>
                         <Nav.Item onClick={this.handleSearch}>
                             <SearchOutlined style={this.state.search?{fontSize:0,transition:'0.5s',position:'absolute'}:{}}/>
                         </Nav.Item>

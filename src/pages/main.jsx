@@ -46,8 +46,6 @@ export default class MainPage extends Component {
                     <p 
                     style={{ color:'#357F59', width:'63%', position:'fixed', zIndex:-1,fontWeight:100}}>
                         YOUR ONE-STOP SHOP TO SOURCE AND ORDER SUSTAINABLE TEXTILES </p>
-                    <Button className='btn-darkgreen' style={{boxShadow:'3px 3px 3px 3px rgba(0,0,0,0.125)', 
-                    height:'fit-content', top:'600px', position:'fixed', href:'/signup', display:this.state.display?'block':'none'}} href='/signup'>Sign Up</Button>
                 </div>
                 <Row style={videoSection}>
                     <Col md={7}>

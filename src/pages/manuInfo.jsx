@@ -8,8 +8,6 @@ import Modal from 'react-bootstrap/Modal'
 import API from '../utils/API'
 import { BookOutlined, EnvironmentOutlined, BookFilled } from '@ant-design/icons'
 import { Typography, Divider } from 'antd'
-import cer1 from '../img/download.png'
-import cer2 from '../img/leed_logo.png'
 import leaf from '../img/leaf.png'
 
 
@@ -89,7 +87,27 @@ export default class ManuInfo extends Component {
                                                     )
                                                 })}
                         </Row>
-                        <div className="certificate-box" style={{width:'70%'}}>
+                        <div className="certificate-body">
+                            
+                        </div>
+                    </Row>
+                </div>
+                <Row className='manu-bio' style={{margin:'30px 0', backgroundColor:'#FDF8F5', widht:'1000px', padding:'30px', width:'70%',marginLeft:'20%'}}>
+                        <h3 style={{fontWeight:'bold'}}>Manufacturer Bio</h3>
+                        <Typography.Paragraph style={{lineHeight:'1.5', textAlign:'left'}}>{infos.bio}</Typography.Paragraph>
+                </Row>
+                </div>
+                <CustomFooter />
+            </div>
+        )} else {
+            return(<div></div>)
+        }
+    }
+}
+
+/**
+ * 
+ *                         <div className="certificate-box" style={{width:'70%'}}>
                            <Row style={{alignItems:'center'}}>
                             <Col md={3}>
                                 <img src={cer1} style={{width:'80%'}} alt=''/>
@@ -108,17 +126,4 @@ export default class ManuInfo extends Component {
                             </Col>
                             </Row>
                         </div>
-                    </Row>
-                </div>
-                <Row className='manu-bio' style={{margin:'30px 0', backgroundColor:'#FDF8F5', widht:'1000px', padding:'30px', width:'70%',marginLeft:'20%'}}>
-                        <h3 style={{fontWeight:'bold'}}>Manufacturer Bio</h3>
-                        <Typography.Paragraph style={{lineHeight:'1.5', textAlign:'left'}}>{infos.bio}</Typography.Paragraph>
-                </Row>
-                </div>
-                <CustomFooter />
-            </div>
-        )} else {
-            return(<div></div>)
-        }
-    }
-}
+ */
