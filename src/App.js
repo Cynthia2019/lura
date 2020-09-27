@@ -57,10 +57,12 @@ function App() {
         <Route path='/email-verification' component={EmailPage}/>
         <Route exact path='/account' component={AccountPage}/>
         <Route component={MyCart} path='/my-cart'/>
+        {access==='admin'?
+        <>
         <Route path='/admin/create-manufacturer' component={CreateManuPage}/>
         <Route path='/admin/edit/:ManuId' component={EditManuPage}/>
-        <Route exact path='/admin' component={AdminPage}/>
-        <Route component={ErrorPage}/>
+        <Route exact path='/admin' component={AdminPage}/></>
+        :<Route component={ErrorPage}/>}
       </Switch>
     </div>
     </Router>

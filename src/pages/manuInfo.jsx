@@ -6,11 +6,11 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import API from '../utils/API'
-import { BookOutlined, EnvironmentOutlined, BookFilled } from '@ant-design/icons'
+import { BookOutlined, EnvironmentOutlined, BookFilled, TeamOutlined } from '@ant-design/icons'
 import { Typography, Divider } from 'antd'
 import leaf from '../img/leaf.png'
 
-
+var certImages = []
 export default class ManuInfo extends Component {
     constructor(props){
         super(props)
@@ -29,8 +29,26 @@ export default class ManuInfo extends Component {
     async getManufacturerfromDB () {
         await API.get(`/manufacturers/info/${this.props.match.params.ManuId}`, {withCredentials:true})
         .then(res=>{
-            this.setState({infos: res.data.info})})
+            this.setState({infos: res.data.info})
+            if(res.data.info.sustainability.certificates !== []){
+                res.data.info.sustainability.certificates.map((cert,ind)=>{
+                    this.getCertImagefromDB(cert.image,ind)
+                })
+            }
+        })
         .catch(err=>console.log(err))
+    }
+    async getCertImagefromDB (certID,ind) {
+        await API.get(`/manufacturers/image/${certID}`,{withCredentials:true, responseType:'blob'})
+        .then(res=>{
+            var reader = new window.FileReader()
+            reader.readAsDataURL(res.data)
+            reader.onload = function () {
+                var imageDataUrl = reader.result
+                document.getElementById(`certImage-${ind}`).setAttribute('src',imageDataUrl)
+            }
+        })
+        .catch(err=>{console.log(err)})
     }
     componentDidMount = () => {
         this.getManufacturerfromDB()
@@ -44,12 +62,13 @@ export default class ManuInfo extends Component {
                 <CustomHeader />
                 <div style={{position:'relative', top:'150px', display:'flex',flexDirection:'column',marginBottom:'50px'}}>
                 <Row className="title-line" style={{flexDirection:'column'}}>
-                    <div className='manu-name' style={{fontSize:'50px',fontWeight:'bold',color:'rgb(55,82,71)'}}>{infos.name}</div>
-                    <div style={{padding:'5px'}}>{infos.info.type}</div>
-                    <div style={{padding:'5px'}}><EnvironmentOutlined />{infos.info.location}</div>
+                    <div className='manu-name' style={{fontSize:'50px',fontWeight:'400',color:'rgb(55,82,71)'}}>{infos.name}</div>
+                    <div style={{padding:'5px', color:'black'}}>{infos.info.type?infos.info.type:'N/A'}</div>
+                    <div style={{padding:'5px',display:'flex',alignItems:'center',justifyContent:'center'}}><EnvironmentOutlined style={{marginRight:'5px'}}/>{infos.info.location?infos.info.location:'N/A'}</div>
+                    <div style={{padding:'5px',display:'flex',alignItems:'center',justifyContent:'center'}}><TeamOutlined style={{marginRight:'5px'}}/>{infos.info.employees?infos.info.employees:'N/A'}</div>
                     <div style={{display:'flex', justifyContent:'center',padding:'5px'}}>
                         <div className="contact-button-info" style={{paddingRight:'30px'}}>
-                            <Button variant='outline-success' style={{borderRadius:'10px', color:'black'}} onClick={this.handleClick}>CONTACT</Button>
+                            <Button className='btn-manuinfo-contact' onClick={this.handleClick}>CONTACT</Button>
                         </div>
                         <Modal show={this.state.show} onHide={this.handleClose} centered style={{border:0}}>
                             <Modal.Header closeButton style={{backgroundColor:'rgba(248, 234, 234,1)'}}>
@@ -70,7 +89,7 @@ export default class ManuInfo extends Component {
                 <div className="main-info" style={{display:'flex', justifyContent:'center', flexDirection:'column'}}>
                     <Row className='info-overview' style={{justifyContent:'center'}}>
                         <div className="overview-box" style={{backgroundColor:'#FDF8F5', textAlign:'left', width:'1000px', padding:'10px', margin:'30px 0'}}>
-                            <div className="overview-title"><h3 style={{fontWeight:'200',color:'rgb(46,78,52)',paddingLeft:'20px'}}>Overview</h3></div>
+                            <div className="overview-title"><h3 style={{fontWeight:'200',color:'rgb(46,78,52)',paddingLeft:'20px'}}>OVERVIEW</h3></div>
                             <ul><span style={{fontWeight:'bold', fontSize:'20px'}}>Types of fabric: </span>{infos.overview.fabricTypes?infos.overview.fabricTypes:'N/A'}</ul>
                             <ul><span style={{fontWeight:'bold', fontSize:'20px'}}>Average Pricing: </span>{infos.overview.pricing?infos.overview.pricing:'N/A'}</ul>
                             <ul><span style={{fontWeight:'bold', fontSize:'20px'}}>Minimum Order Quantity: </span>{infos.overview.minimumOrderQuantity?infos.overview.minimumOrderQuantity:'N/A'}</ul>
@@ -79,22 +98,36 @@ export default class ManuInfo extends Component {
                     </Row>
                     <Row className='certificate' style={{backgroundColor:'rgba(245,235,233,1)', textAlign:'center', 
                     margin:'30px 0', padding:'30px', justifyContent:'center',flexDirection:'column',alignItems:'center'}}>
-                        <div className="certificate-title"><h1>SUSTAINABILITY CERTIFICATIONS</h1></div>
+                        <div className="certificate-title"><h1 style={{color:'rgb(65,110,85)',fontWeight:400}}>SUSTAINABILITY CERTIFICATIONS</h1></div>
                         <Row style={{justifyContent:'center',flexDirection:'column',alignItems:'center'}} >
-                        {infos.sustainability.practices.map((practice, i)=>{
+                        {infos.sustainability.practices[0]?infos.sustainability.practices.map((practice, i)=>{
                                                     return(
                                                     <div key={i}><img src={leaf} alt={''} style={{padding:'0 5px'}}/>{practice}</div>
                                                     )
-                                                })}
+                                                }):<></>}
                         </Row>
-                        <div className="certificate-body">
-                            
+                        <div className="certificate-box" style={{width:'60%', marginTop:'30px'}}>
+                            {infos.sustainability.certificates.map((cert, i)=>{
+                                return(
+                                    <>
+                                    <Row style={{alignItems:'center', margin:'0', marginTop:'10px'}} key={i}>
+                                        <Col md={3}>
+                                            <img style={{width:'100%'}} alt='' id={`certImage-${i}`}/>
+                                        </Col>
+                                        <Col md={9}>
+                                        <Typography.Paragraph style={{fontSize:'12px'}}>{cert.label}</Typography.Paragraph>
+                                        </Col>
+                                    </Row>
+                                    <Divider style={{border:"2px solid rgb(151,151,151)", margin:'10px'}}/>
+                                    </>
+                                )
+                            })}
                         </div>
                     </Row>
                 </div>
                 <Row className='manu-bio' style={{margin:'30px 0', backgroundColor:'#FDF8F5', widht:'1000px', padding:'30px', width:'70%',marginLeft:'20%'}}>
-                        <h3 style={{fontWeight:'bold'}}>Manufacturer Bio</h3>
-                        <Typography.Paragraph style={{lineHeight:'1.5', textAlign:'left'}}>{infos.bio}</Typography.Paragraph>
+                        <h3 style={{fontWeight:'200'}}>MANUFACTURER BIO</h3>
+                        <Typography.Paragraph style={{lineHeight:'1.5', textAlign:'left',color:'rgb(79,86,76)',fontWeight:300}}>{infos.bio}</Typography.Paragraph>
                 </Row>
                 </div>
                 <CustomFooter />

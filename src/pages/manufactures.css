@@ -81,6 +81,24 @@ ul {
     align-items: center;
     min-height: 100vh;
 }
+/* manuinfo */
+.btn-manuinfo-contact {
+    border: 1px solid rgb(76,119,97) !important;
+    background-color: transparent !important;
+    border-radius: 10px !important;
+    color:black !important;
+    box-shadow: none !important;
+}
+.btn-manuinfo-contact:hover {
+    border: 1px solid transparent !important;
+    background-color: rgb(53,167,89) !important;
+    border-radius: 10px !important;
+    color:white !important;
+    box-shadow: none !important;
+}
+.overview-box > ul {
+    margin-bottom: 0.5rem
+}
 @media screen and (min-width: 801px) {
     .image-text {
         font-size: 65px;

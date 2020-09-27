@@ -27,7 +27,7 @@ export default class Manufacture extends Component {
         }
     }
     async getUserFromDB () {
-        await API.get(`/user${temp}`, config)
+        await API.get(`/user`, config)
         .then(res=>{
                 if(res.data.access) {
                     this.setState({user:true})
@@ -42,7 +42,7 @@ export default class Manufacture extends Component {
         ).catch(err=>console.log(err))
     }
     async getManufacturerfromDB () {
-        await API.get(`/manufacturers/all${temp}`, config)
+        await API.get(`/manufacturers/all`, config)
         .then(res => {
             console.log(res.data)
             this.setState({
@@ -85,11 +85,11 @@ export default class Manufacture extends Component {
                         <Button onClick={()=>{this.setState({collapse:!this.state.collapse})}} className='control-collapse'>{this.state.collapse?<RightOutlined />:<LeftOutlined />}</Button>
                     </Col>
                     <Col xs={7} className='database-content-main' style={(this.state.collapse)?{transition:'0.5s'}:this.state.width>800?{}:{display:'none'}}>
-                        {this.state.loading?<Spinner animation="border" variant="success" size='lg'/>:this.state.manufacturers.length!== 0?this.state.manufacturers.map((manu, i)=>{
+                        {this.state.loading?<Spinner animation="border" variant="success" size='lg' style={{marginTop:'30%'}}/>:this.state.manufacturers.length!== 0?this.state.manufacturers.map((manu, i)=>{
                             return(
                                 <ManuCard info={manu} saved={this.state.saved} key={i}/>
                             )
-                        }):<div style={{justifyContent:'center',display:'flex',alignItems:'center'}}>
+                        }):<div style={{marginTop:'30%'}}>
                             <h3>Please login first to see the supplier information.</h3>
                         </div>}
                     </Col>

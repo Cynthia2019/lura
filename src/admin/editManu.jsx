@@ -1,11 +1,12 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
 import API from '../utils/API'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import { PlusOutlined } from '@ant-design/icons'
-import { CheckboxRow } from 'aws-amplify-react';
+import ChangeInfo from './editUpdateFunctions'
+
 
 const config = {
     headers: {
@@ -15,7 +16,6 @@ const config = {
     withCredentials: true
 }
 const temp = '?key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin'
-
 export default class EditManuPage extends React.Component {
     constructor(props){
         super(props)
@@ -45,6 +45,7 @@ export default class EditManuPage extends React.Component {
             sustainability: null, 
             name: null, 
             bio:null,
+            image: null
         }
 
     }
@@ -123,13 +124,13 @@ export default class EditManuPage extends React.Component {
         .catch(err=>this.setState({error: err}))
     }
     async addCertificate () {
+        console.log(this.state.image, 'image')
         var f = new FormData()
         f.append('name',this.certName.current.value)
         f.append('label',this.certLabel.current.value)
-        f.append('image',this.certImage.current.value)
+        f.append('image',this.state.image)
         await API.post(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/certificates${temp}`, 
-        f, 
-        {headers:{'Content-Type':'multipart/form-data'}})
+        f, config)
         .then(res=>{if(res.status===201){
             alert('add new certificate')
             window.location.reload(false)
@@ -137,7 +138,7 @@ export default class EditManuPage extends React.Component {
         .catch(err=>{console.log(err)})
     }
     async delCertificate (id) {
-        await API.delete(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/certificates?index=${id}${temp}`)
+        await API.delete(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/certificates?index=${id}&key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`)
         .then(res=>{if(res.status===200){
             alert('certificate deleted')
             window.location.reload(false)
@@ -150,8 +151,11 @@ export default class EditManuPage extends React.Component {
             window.location.reload(false)
         }
     }
-    handleAddCert = (e) => {
-        e.preventDefault()
+    handleSetFile = (e) => {
+        const file = e.target.files[0]
+        this.setState({image: file})
+    }
+    handleAddCert = () => {
         this.addCertificate()
     }
     handleDelCert = (id) => {
@@ -269,11 +273,11 @@ export default class EditManuPage extends React.Component {
                         <Col>
                         <Form.Group style={{display:'flex',justifyContent:'center'}}>
                             <Form.Label>Certificate Image</Form.Label>
-                            <Form.File ref={this.certImage}/>
+                            <Form.File ref={this.certImage} onChange={this.handleSetFile}/>
                         </Form.Group>
                         </Col>
                     </Row>
-                    <Row alignItems='center'>
+                    <Row>
                         <Col>
                         <Form.Group>
                             <Form.Label>Certificate Description</Form.Label>
@@ -286,14 +290,19 @@ export default class EditManuPage extends React.Component {
                     </Row>
                     {this.state.sustainability.certificates.map((cert,i)=>{
                         return(
-                            <Row style={{margin:'20px'}}>
-                                <Col xs={8}>
+                            <Row style={{margin:'20px 0'}} key={i}>
+                                <Col xs={6}>
                                 <Form.Group key={i}>
-                                    <Form.Control placeholder={cert.label} disabled as='textarea'/>
+                                    <Form.Control placeholder={cert.label} disabled as='textarea' style={{height:'fit-content'}}/>
                                 </Form.Group>
                                 </Col>
-                                <Col xs={4}>
-                                <Button variant='danger' onClick={this.handleDelCert(cert.id)}>Delete Certificate</Button>
+                                <Col xs={6}>
+                                <Button variant='danger' onClick={()=>this.handleDelCert(cert.id)}>Delete Certificate</Button>
+                                <div style={{display:'flex'}}>
+                                <ChangeInfo id={this.props.match.params.ManuId} index={cert.id} type='name'/>
+                                <ChangeInfo id={this.props.match.params.ManuId} index={cert.id} type='label'/>
+                                <ChangeInfo id={this.props.match.params.ManuId} index={cert.id} type='file'/>
+                                </div>
                                 </Col>
                             </Row>
                         )
@@ -309,12 +318,4 @@ export default class EditManuPage extends React.Component {
             return (<div></div>)
         }
     }
-}
-function AddCertificate(props) {
-    return(
-        <Form.Group>
-            <Form.Label>Certificate</Form.Label>
-            <Form.File label='certificate image' custom/>
-        </Form.Group>
-    )
 }
