@@ -10,7 +10,7 @@ function ChangeCertName(props) {
     const [open, setOpen] = useState(false)
     var name = null
     function updateInfo () {
-        API.patch(`/manufacturers/admin/edit/${props.id}/certificates/name?index=${props.index}${temp2}`, 
+        API.patch(`/manufacturers/admin/edit/${props.id}/certificates/name?index=${props.index}`, 
         {
             name:name
         }).then(res=>{if(res.status===200){
@@ -38,7 +38,7 @@ function ChangeCertLabel(props) {
     const [open, setOpen] = useState(false)
     var label = null
     function updateInfo () {
-        API.patch(`/manufacturers/admin/edit/${props.id}/certificates/label?index=${props.index}${temp2}`, 
+        API.patch(`/manufacturers/admin/edit/${props.id}/certificates/label?index=${props.index}`, 
         {
             label:label
         }).then(res=>{if(res.status===200){
@@ -69,7 +69,7 @@ function ChangeCertFile(props) {
         console.log(file)
         var f = new FormData()
         f.append('image',file)
-        API.patch(`/manufacturers/admin/edit/${props.id}/certificates/image?index=${props.index}${temp2}`, 
+        API.patch(`/manufacturers/admin/edit/${props.id}/certificates/image?index=${props.index}`, 
         f,{headers:{'Content-Type':'multipart/form-data'}}).then(res=>{if(res.status===200){
             alert('update Successfully')
             setOpen(false)

@@ -129,7 +129,7 @@ export default class EditManuPage extends React.Component {
         f.append('name',this.certName.current.value)
         f.append('label',this.certLabel.current.value)
         f.append('image',this.state.image)
-        await API.post(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/certificates${temp}`, 
+        await API.post(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/certificates`, 
         f, config)
         .then(res=>{if(res.status===201){
             alert('add new certificate')
@@ -138,7 +138,7 @@ export default class EditManuPage extends React.Component {
         .catch(err=>{console.log(err)})
     }
     async delCertificate (id) {
-        await API.delete(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/certificates?index=${id}&key=1f3ab8f7-2103-4046-9cfc-0d6cf2756602&access=admin`)
+        await API.delete(`/manufacturers/admin/edit/${this.props.match.params.ManuId}/certificates?index=${id}`)
         .then(res=>{if(res.status===200){
             alert('certificate deleted')
             window.location.reload(false)

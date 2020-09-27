@@ -25,7 +25,7 @@ export default class AdminPage extends Component {
     }
     async handleClick (id) {
         console.log(id)
-        await API.delete(`/manufacturers/admin/delete/${id}${temp}`,config)
+        await API.delete(`/manufacturers/admin/delete/${id}`,config)
         .then(res=>{if(res.status===200){
             alert("Manufacturer deleted")
             window.location.reload(false)
